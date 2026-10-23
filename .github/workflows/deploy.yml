@@ -1,24 +1,27 @@
-name: Deploy React App to GitHub Pages
+name: Deploy React Profile Card
 
 on:
   push:
-    branches: [ main ] # Change to "master" if your default branch is master
+    branches: [ main ] # Change to "master" if your repository's default branch is master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout Code 🛎️
         uses: actions/checkout@v4
 
       - name: Set up Node.js ⚙️
         uses: actions/setup-node@v4
         with:
-          node-version: 18 # You can change this to 20 if preferred
+          node-version: 18
           cache: 'npm'
 
-      - name: Install dependencies and build 📦
+      - name: Install Dependencies and Build 📦
         run: |
           npm ci
           npm run build
@@ -27,4 +30,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build # Use ./dist if using Vite
+          publish_dir: ./build
